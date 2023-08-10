@@ -3,18 +3,17 @@
 let buttons = document.getElementsByClassName("drum");
 for (let i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener("click", function () {
-    let sound = makeSound(this.innerHTML);
-    let audio = new Audio(sound);
-    audio.play();
+    makeSound(this.innerHTML);
+
+    buttonAnimation(this.innerHTML);
   });
 }
 
 // Detecting keyboard down
 
 document.addEventListener("keydown", (event) => {
-  let sound = makeSound(event.key);
-  let audio = new Audio(sound);
-  audio.play();
+  makeSound(event.key);
+  buttonAnimation(event.key);
 });
 
 let makeSound = (letter) => {
@@ -44,5 +43,16 @@ let makeSound = (letter) => {
     default:
       console.log("invalid key");
   }
-  return sound;
+
+  let audio = new Audio(sound);
+  audio.play();
+};
+
+let buttonAnimation = (currentKey) => {
+  let activeButton = document.querySelector("." + currentKey);
+  activeButton.classList.add("pressed");
+
+  setTimeout(() => {
+    activeButton.classList.remove("pressed");
+  }, 100);
 };
